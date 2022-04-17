@@ -12,12 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import sv.com.udb.prueba.R;
 import sv.com.udb.prueba.databinding.ActivityCitaBinding;
+import sv.com.udb.prueba.model.Cita;
 import sv.com.udb.prueba.model.Horario;
 import sv.com.udb.prueba.model.Tratamiento;
+import sv.com.udb.prueba.repositories.CitaRepository;
 import sv.com.udb.prueba.repositories.HorarioRepository;
 import sv.com.udb.prueba.repositories.TratamientoRepository;
 import sv.com.udb.prueba.spinners.SpinnerHorarioAdapter;
@@ -28,6 +31,7 @@ public class CitaActivity extends AppCompatActivity implements DatePickerDialog.
     private final static String EMPTY = "";
     private TratamientoRepository tratamientoRepository;
     private HorarioRepository horarioRepository;
+    private CitaRepository citaRepository;
 
     private ActivityCitaBinding binding;
 
@@ -46,6 +50,7 @@ public class CitaActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(binding.getRoot());
         tratamientoRepository = new TratamientoRepository(getApplicationContext());
         horarioRepository = new HorarioRepository(getApplicationContext());
+        citaRepository = new CitaRepository(getApplicationContext());
         initialize();
         spinnerHorarioAdapter = new SpinnerHorarioAdapter(this, android.R.layout.simple_spinner_dropdown_item,horarioList.toArray(new Horario[horarioList.size()]));
         spinnerTratamientoAdapter = new SpinnerTratamientoAdapter(this, android.R.layout.simple_spinner_dropdown_item,tratamientoList.toArray(new Tratamiento[tratamientoList.size()]));
@@ -55,7 +60,26 @@ public class CitaActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     private void onAgendarCita(View view){
-        showToast("Agendando cita");
+
+        String cliente;
+        String fecha;
+
+        try{
+            cliente = binding.txtCliente.getText().toString();
+            fecha = binding.txtFecha.getText().toString();
+
+            if (EMPTY.equals(cliente) || EMPTY.equals(fecha) ||
+                    actualHorario == null || actualTratamiento == null){
+                showToast("Los campos [cliente] - [fecha] - [horario] - [tratamiento] son requeridos");
+                return;
+            }
+            Cita instance = new Cita(null,fecha,cliente,actualHorario,actualTratamiento);
+            citaRepository.create(instance);
+            showToast("Cita agendada correctamente!");
+            finish();
+        }catch (Exception e){
+            showToast("No se pudo agendar la cita");
+        }
     }
 
     private void showToast(String mesage){

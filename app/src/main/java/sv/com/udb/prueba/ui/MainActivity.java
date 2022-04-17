@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnReporte:
                 irReporte();
                 break;
-
         }
     }
 
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void irReporte(){
-
+        Intent i = new Intent(this, ReporteActivity.class);
+        startActivity(i);
     }
 }

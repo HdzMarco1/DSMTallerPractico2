@@ -12,7 +12,7 @@ create table horario(
 
 create table cita(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    fecha date not null,
+    fecha varchar(50) not null,
     cliente varchar(100) not null,
     horario_id integer,
     tratamiento_id integer,
@@ -27,3 +27,4 @@ insert into tratamiento(nombre, precio) values
 
 insert into horario(hora_inicio, hora_fin) values
 ('08:15', '09:45'), ('10:15','11:45'), ('13:15', '14:45'), ('15:15', '16:45');
+

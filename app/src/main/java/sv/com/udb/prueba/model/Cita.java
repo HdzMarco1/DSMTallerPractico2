@@ -12,7 +12,7 @@ public class Cita {
     private Integer id;
 
     @DatabaseField
-    private Date fecha;
+    private String fecha;
 
     @DatabaseField
     private String cliente;
@@ -26,7 +26,7 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(Integer id, Date fecha, String cliente, Horario horario, Tratamiento tratamiento) {
+    public Cita(Integer id, String fecha, String cliente, Horario horario, Tratamiento tratamiento) {
         this.id = id;
         this.fecha = fecha;
         this.cliente = cliente;
@@ -42,11 +42,11 @@ public class Cita {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

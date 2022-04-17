@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaPractica2">
         <activity
+            android:name=".ui.ReporteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CitaActivity"
             android:exported="false" />
         <activity
